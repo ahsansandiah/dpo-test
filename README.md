@@ -73,6 +73,12 @@ I'am using [Goose](https://github.com/pressly/goose) to track changes on databas
 4. Run command `make migrate-up-local`
 <br />
 
+### Entity Diagrams
+
+https://dbdiagram.io/d/DPO-Diagram-6686aa879939893dae0ef2c8
+
+<img src="https://i.ibb.co.com/b71thP8/Screenshot-2024-07-04-at-21-30-41.png" width="550">
+
 ## Copyright
 
 

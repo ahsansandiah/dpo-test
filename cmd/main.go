@@ -7,6 +7,8 @@ import (
 
 	"github.com/ahsansandiah/dpo-test/packages/manager"
 	"github.com/ahsansandiah/dpo-test/packages/server"
+
+	orderRoutes "github.com/ahsansandiah/dpo-test/api/order/delivery"
 )
 
 func run() error {
@@ -26,6 +28,7 @@ func run() error {
 	server := server.NewServer(mgr.GetConfig())
 
 	// start routes
+	orderRoutes.NewRoutes(server.Router, mgr)
 	// end routes
 
 	server.RegisterRouter(server.Router)
