@@ -70,7 +70,7 @@ func (u *CustomerUsecase) Update(ctx context.Context, ID int64, request *custome
 	customer, err := u.repo.GetById(ctx, ID)
 	if err != nil {
 		u.log.ErrorLog(ctx, err)
-		errMsg := errors.New("Error fetching cake details")
+		errMsg := errors.New("Error fetching customer details")
 		return nil, errMsg
 	}
 
@@ -93,7 +93,7 @@ func (u *CustomerUsecase) Update(ctx context.Context, ID int64, request *custome
 	result, err := u.repo.Update(ctx, ID, request)
 	if err != nil {
 		u.log.ErrorLog(ctx, err)
-		errMsg := errors.New("Error deleting customer")
+		errMsg := errors.New("Error updating customer")
 		return nil, errMsg
 	}
 

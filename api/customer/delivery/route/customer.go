@@ -12,6 +12,6 @@ func NewCustomerRoute(mgr manager.Manager, route *mux.Router) {
 	route.Handle("/customers", customerHandler.GetAll()).Methods("GET")
 	route.Handle("/customers/{id}", customerHandler.Delete()).Methods("DELETE")
 	route.Handle("/customers/{id}", customerHandler.GetByID()).Methods("GET")
-	route.Handle("/customers/{id}", customerHandler.Update()).Methods("PATCH")
+	route.Handle("/customers/{id}", customerHandler.Update()).Methods("PUT")
 	route.Handle("/customers", customerHandler.Create()).Methods("POST")
 }

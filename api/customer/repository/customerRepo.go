@@ -3,6 +3,7 @@ package customerRepository
 import (
 	"context"
 	"database/sql"
+	"time"
 
 	customerDomainInterface "github.com/ahsansandiah/dpo-test/api/customer/domain"
 	customerDomainEntity "github.com/ahsansandiah/dpo-test/api/customer/domain/entity"
@@ -27,7 +28,7 @@ func NewCustomerRepository(mgr manager.Manager) customerDomainInterface.Customer
 }
 
 func (r *Customer) GetAll(ctx context.Context, filter *customerDomainEntity.CustomerFilter) ([]customerDomainEntity.Customer, error) {
-	query := "SELECT id, full_name, address, phone_number, email, is_active, created_at, updated_at FROM customers WHERE 1=1"
+	query := "SELECT id, full_name, address, phone_number, email, is_active, created_at, updated_at FROM customers WHERE deleted_at IS NULL"
 	var args []interface{}
 
 	if filter.FullName != "" {
@@ -46,7 +47,7 @@ func (r *Customer) GetAll(ctx context.Context, filter *customerDomainEntity.Cust
 	}
 
 	if filter.FullName == "" && filter.Email == "" && filter.PhoneNumber == "" {
-		query = "SELECT id, full_name, address, phone_number, email, is_active, created_at, updated_at FROM customers"
+		query = "SELECT id, full_name, address, phone_number, email, is_active, created_at, updated_at FROM customers WHERE deleted_at IS NULL"
 	}
 
 	query += " LIMIT ?"
@@ -90,15 +91,15 @@ func (r *Customer) GetById(ctx context.Context, ID int64) (*customerDomainEntity
 }
 
 func (r *Customer) Delete(ctx context.Context, ID int64) error {
-	stmt, err := r.DB.Prepare("DELETE FROM customers WHERE id = ?")
+	stmt, err := r.DB.Prepare("UPDATE customers SET deleted_at = ? WHERE id = ?")
 	if err != nil {
 		r.log.ErrorLog(ctx, err)
 		return err
 	}
 	defer stmt.Close()
 
-	// Execute DELETE statement
-	_, err = stmt.Exec(ID)
+	// Set deleted_at to current timestamp
+	_, err = stmt.Exec(time.Now(), ID)
 	if err != nil {
 		r.log.ErrorLog(ctx, err)
 		return err
@@ -125,7 +126,7 @@ func (r *Customer) Update(ctx context.Context, ID int64, request *customerDomain
 
 	// Query the updated customer
 	query := "SELECT id, full_name, address, phone_number, email, is_active, created_at, updated_at FROM customers WHERE id = ?"
-	err = r.DB.QueryRowContext(ctx, query, ID).Scan(&customer.ID, &customer.FullName, &customer.Address, &customer.PhoneNumber, &customer.Email, &customer.IsActive)
+	err = r.DB.QueryRowContext(ctx, query, ID).Scan(&customer.ID, &customer.FullName, &customer.Address, &customer.PhoneNumber, &customer.Email, &customer.IsActive, &customer.CreatedAt, &customer.UpdatedAt)
 	if err != nil {
 		r.log.ErrorLog(ctx, err)
 		return nil, err

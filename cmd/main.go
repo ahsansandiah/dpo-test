@@ -8,6 +8,7 @@ import (
 	"github.com/ahsansandiah/dpo-test/packages/manager"
 	"github.com/ahsansandiah/dpo-test/packages/server"
 
+	customerRoutes "github.com/ahsansandiah/dpo-test/api/customer/delivery"
 	orderRoutes "github.com/ahsansandiah/dpo-test/api/order/delivery"
 )
 
@@ -29,6 +30,7 @@ func run() error {
 
 	// start routes
 	orderRoutes.NewRoutes(server.Router, mgr)
+	customerRoutes.NewRoutes(server.Router, mgr)
 	// end routes
 
 	server.RegisterRouter(server.Router)
