@@ -16,4 +16,10 @@ var (
 	ErrorOrderDateRequired    = errors.New("order date is required")
 	ErrorAmountIsRequired     = errors.New("amount is required")
 	ErrorOrderItemsIsRequired = errors.New("order items is required")
+
+	// Error user module
+	ErrorUsernameIsRequired        = errors.New("User name is required")
+	ErrorPasswordIsRequired        = errors.New("Password is required")
+	ErrorPasswordConfirmIsRequired = errors.New("Password confirm is required")
+	ErrorPasswordNotMatch          = errors.New("Password not match")
 )

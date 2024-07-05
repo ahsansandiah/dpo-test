@@ -7,7 +7,8 @@ import (
 )
 
 func NewRoutes(r *mux.Router, mgr manager.Manager) {
-	api := r.PathPrefix("").Subrouter()
+	apiAuth := r.PathPrefix("").Subrouter()
+	apiAuth.Use(mgr.GetMiddleware().CheckToken)
 
-	orderRoute.NewOrderRoute(mgr, api)
+	orderRoute.NewOrderRoute(mgr, apiAuth)
 }

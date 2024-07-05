@@ -18,6 +18,8 @@ type Config struct {
 	DatabaseMaxIdleConnections int    `mapstructure:"DATABASE_MAX_IDLE_CONNECTIONS"`
 	PortHttpServer             string `mapstructure:"PORT_HTTP_SERVER"`
 	ServerHTTPReadTimeout      int    `mapstructure:"SERVER_HTTP_READ_TIMEOUT"`
+	JwtSecretKey               string `mapstructure:"JWT_SECRET_KEY"`
+	JwtAccessTokenDuration     int    `mapstructure:"JWT_ACCESS_TOKEN_DURATION_SECONDS"`
 }
 
 func NewConfig() (*Config, error) {
